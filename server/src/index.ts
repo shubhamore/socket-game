@@ -4,9 +4,16 @@ import { Server, Socket } from 'socket.io';
 import cors from 'cors';
 
 const app = express();
+
 app.use(cors({
   origin: '*'
 }));
+
+app.get('/', (req, res) => {
+  res.json({ alive: true });
+});
+
+
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -32,7 +39,7 @@ io.on('connection', (socket: Socket) => {
 
     if (!rooms[roomId]) {
       socket.emit('error', 'Room does not exist');
-      return
+      return;
     }
 
     rooms[roomId].push(socket.id);
