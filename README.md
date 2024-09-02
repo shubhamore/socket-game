@@ -35,7 +35,7 @@ cd tic-tac-toe
 
 ### Frontend Setup
 
-1. Navigate to the `frontend` directory:
+1. Navigate to the `client` directory:
 
     ```bash
     cd client
@@ -55,7 +55,7 @@ cd tic-tac-toe
 
 ### Backend Setup
 
-1. Navigate to the `backend` directory:
+1. Navigate to the `server` directory:
 
     ```bash
     cd server
