@@ -5,7 +5,8 @@ import Room from "./pages/Room";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const socket: Socket = io("http://localhost:4000");
+const url= import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+const socket: Socket = io(url);
 
 export type PageState = "home" | "room";
 export type PlayerSign = "X" | "O" | undefined;
