@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Socket } from 'socket.io-client';
-import { PageState } from '../App';
+import { PageState, PlayerSign } from '../App';
 
 type HomeProps = {
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
   socket: Socket;
   setRoomId: React.Dispatch<React.SetStateAction<string>>;
   roomId: string;
+  setPlayerSign: React.Dispatch<React.SetStateAction<PlayerSign>>;
 };
 
-const Home: React.FC<HomeProps> = ({ setPageState, socket, roomId, setRoomId }) => {
+const Home: React.FC<HomeProps> = ({ setPageState, socket, roomId, setRoomId, setPlayerSign }) => {
   useEffect(() => {
     socket.on('createRoomSuccess', () => {
       console.log("Room created successfully");
+      setPlayerSign("X");
       setPageState("room");
     });
 
     socket.on('joinRoomSuccess', () => {
       console.log("Room joined successfully");
+      setPlayerSign("O");
       setPageState("room");
     });
 

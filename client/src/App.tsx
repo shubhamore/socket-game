@@ -8,11 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 const socket: Socket = io("http://localhost:4000");
 
 export type PageState = "home" | "room";
+export type PlayerSign = "X" | "O" | undefined;
 
 const App: React.FC = () => {
   const [pageState, setPageState] = useState<PageState>("home");
   const [roomId, setRoomId] = useState<string>("");
   const [players, setPlayers] = useState<string[]>([]);
+  const [playerSign, setPlayerSign] = useState<PlayerSign>();
 
   useEffect(() => {
     socket.on("message", (msg: string) => {
@@ -42,6 +44,7 @@ const App: React.FC = () => {
         socket={socket}
         roomId={roomId}
         setRoomId={setRoomId}
+        setPlayerSign={setPlayerSign}
         />
       )}
       {pageState === "room" && (
@@ -50,6 +53,8 @@ const App: React.FC = () => {
         socket={socket}
         roomId={roomId}
         players={players}
+        playerSign={playerSign}
+        setPlayerSign={setPlayerSign}
         />
       )}
       <ToastContainer />

@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import cors from 'cors';
 
 const app = express();
 const server = http.createServer(app);
@@ -54,6 +53,18 @@ io.on('connection', (socket: Socket) => {
 
     console.log(`Client ${socket.id} created room ${roomId}`);
     socket.emit('createRoomSuccess', roomId); // Emit success event
+  });
+
+  socket.on('move', ({ index, playerSign }: { index: number; playerSign: string }) => {
+    for (const [roomId, clients] of Object.entries(rooms)) {
+      if (clients.includes(socket.id)) {
+        const opponent = clients.find((clientId) => clientId !== socket.id);
+        if (opponent) {
+          io.to(opponent).emit('move', { index, playerSign });
+        }
+        break;
+      }
+    }
   });
 
   socket.on('leaveRoom', (roomId: string) => {
