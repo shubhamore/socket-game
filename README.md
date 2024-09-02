@@ -76,8 +76,5 @@ cd tic-tac-toe
 ## Usage
 
 1. Ensure both frontend and backend servers are running.
-2. Open your browser and navigate to `http://localhost:3000` to access the game.
+2. Open your browser and navigate to `http://localhost:5173` to access the game.
 3. Create a room or join an existing one to start playing.
-
-
-
