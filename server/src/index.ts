@@ -27,7 +27,8 @@ io.on('connection', (socket: Socket) => {
     }
 
     if (!rooms[roomId]) {
-      rooms[roomId] = [];
+      socket.emit('error', 'Room does not exist');
+      return
     }
 
     rooms[roomId].push(socket.id);
@@ -36,7 +37,7 @@ io.on('connection', (socket: Socket) => {
     io.to(roomId).emit('updatePlayers', rooms[roomId]);
 
     console.log(`Client ${socket.id} joined room ${roomId}`);
-    socket.emit('joinRoomSuccess', roomId); // Emit success event
+    socket.emit('joinRoomSuccess', roomId); 
   });
 
   socket.on('createRoom', (roomId: string) => {
@@ -52,7 +53,7 @@ io.on('connection', (socket: Socket) => {
     io.to(roomId).emit('updatePlayers', rooms[roomId]);
 
     console.log(`Client ${socket.id} created room ${roomId}`);
-    socket.emit('createRoomSuccess', roomId); // Emit success event
+    socket.emit('createRoomSuccess', roomId); 
   });
 
   socket.on('move', ({ index, playerSign }: { index: number; playerSign: string }) => {
@@ -63,6 +64,23 @@ io.on('connection', (socket: Socket) => {
           io.to(opponent).emit('move', { index, playerSign });
         }
         break;
+      }
+    }
+  });
+
+  socket.on('rematchRequest', (roomId: string) => {
+    const opponent = rooms[roomId].find(id => id !== socket.id);
+    if (opponent) {
+      io.to(opponent).emit('rematchRequest', { requesterId: socket.id, roomId });
+    }
+  });
+
+  socket.on('rematchResponse', ({ roomId, accept }: { roomId: string, accept: boolean }) => {
+    const opponent = rooms[roomId].find(id => id !== socket.id);
+    if (opponent) {
+      io.to(opponent).emit('rematchResponse', accept);
+      if (accept) {
+        io.to(roomId).emit('startNewGame');
       }
     }
   });
