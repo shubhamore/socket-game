@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Socket } from "socket.io-client";
 import { PageState, PlayerSign } from "../App";
 import Game from "../components/Game";

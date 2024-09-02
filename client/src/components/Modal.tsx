@@ -1,5 +1,4 @@
 import {
-  Description,
   Dialog,
   DialogBackdrop,
   DialogPanel,
@@ -10,22 +9,18 @@ import { Socket } from "socket.io-client";
 
 type ModalProps = {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   result: string;
   handleLeaveRoom: () => void;
   socket: Socket;
   roomId: string;
-  resetGame: () => void;
 };
 
 export default function Modal({
   open,
-  setOpen,
   result,
   handleLeaveRoom,
   socket,
   roomId,
-  resetGame,
 }: ModalProps) {
   const [sendingRequest, setSendingRequest] = useState(false);
   const [receivedRequest, setReceivedRequest] = useState(false);

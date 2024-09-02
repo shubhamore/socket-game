@@ -22,7 +22,7 @@ const Game: React.FC<GameProps> = ({
 }) => {
   const [board, setBoard] = useState<string[]>(Array(9).fill(""));
   const [moveCount, setMoveCount] = useState(0);
-  const [isPointer, setIsPointer] = useState(true);
+  const [isPointer] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [result, setResult] = useState("");
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
@@ -167,12 +167,10 @@ const Game: React.FC<GameProps> = ({
       </div>
       <Modal
         open={gameOver}
-        setOpen={setGameOver}
         result={result}
         handleLeaveRoom={handleLeaveRoom}
         socket={socket}
         roomId={roomId}
-        resetGame={resetGame}
       />
     </div>
   );
