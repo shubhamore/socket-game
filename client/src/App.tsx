@@ -37,7 +37,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen bg-slate-100">
       {pageState === "home" && (
         <Home
         setPageState={setPageState}
